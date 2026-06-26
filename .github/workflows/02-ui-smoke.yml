@@ -1,0 +1,94 @@
+name: 02 - UI And Smoke
+
+on:
+  workflow_run:
+    workflows:
+      - 01 - Foundation
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  ui-tests:
+    name: Run UI tests
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      # The workflow starts after 01 - Foundation succeeds, or you can trigger it manually.
+      - uses: actions/checkout@v4
+
+      # UI tests still need the same Java toolchain as the API suite.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Run the Docker-backed Karate UI profile.
+      - name: Run UI suite
+        run: ./mvnw -B verify -Pui
+
+      # Save screenshots and HTML reports from the UI run.
+      - name: Upload UI report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-report
+          path: target/karate-reports
+          retention-days: 7
+
+  smoke-test:
+    name: Start app and smoke test it
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      # New runner for the smoke test job.
+      - uses: actions/checkout@v4
+
+      # Install Java so the local runner can start the app.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Start the app in the background and wait until it answers HTTP requests.
+      - name: Start app
+        shell: bash
+        run: |
+          mkdir -p target
+          nohup ./mvnw -B test -Dtest=LocalRunner > target/local-runner.log 2>&1 &
+          echo $! > target/local-runner.pid
+          for i in {1..60}; do
+            if curl -fsS http://localhost:8080/ > target/home.html; then
+              break
+            fi
+            sleep 1
+          done
+          test -f target/home.html || (echo "app did not start"; cat target/local-runner.log; exit 1)
+
+      # Check that the returned page looks like the TODO app.
+      - name: Assert page content
+        shell: bash
+        run: grep -qi "todo" target/home.html
+
+      # Always stop the background JVM so the runner exits cleanly.
+      - name: Stop app
+        if: always()
+        shell: bash
+        run: kill "$(cat target/local-runner.pid)" || true
+
+      # Keep the server log for debugging when startup fails.
+      - name: Upload smoke log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-log
+          path: target/local-runner.log
+          retention-days: 7

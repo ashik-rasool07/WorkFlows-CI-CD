@@ -1,0 +1,100 @@
+name: 05 - Publish Reports
+
+on:
+  workflow_run:
+    workflows:
+      - 04 - Performance
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  publish:
+    name: Generate and publish Pages site
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    steps:
+      # Download the repository because this workflow regenerates the final reports.
+      - uses: actions/checkout@v4
+
+      # Install Java to run the API, UI, and performance tasks again for the publish bundle.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Regenerate the API and UI report set that will be published to GitHub Pages.
+      - name: Run API and UI reports
+        run: ./mvnw -B verify -Pui
+
+      # Start the app so the Gatling report can be produced for the Pages site too.
+      - name: Start app for Gatling
+        shell: bash
+        run: |
+          mkdir -p target
+          nohup ./mvnw -B test -Dtest=LocalRunner > target/local-runner.log 2>&1 &
+          echo $! > target/local-runner.pid
+          for i in {1..60}; do
+            if curl -fsS http://localhost:8080/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://localhost:8080/ > /dev/null || (echo "app did not start"; cat target/local-runner.log; exit 1)
+
+      # Generate the Gatling report that will sit next to the Karate report on Pages.
+      - name: Run Gatling
+        run: ./mvnw -B test -P gatling
+
+      # Stop the background app after performance testing finishes.
+      - name: Stop app
+        if: always()
+        shell: bash
+        run: kill "$(cat target/local-runner.pid)" || true
+
+      # Assemble a simple static site that links to the generated reports.
+      - name: Build Pages content
+        shell: bash
+        run: |
+          mkdir -p public/latest/karate public/latest/gatling-raw
+          cp -R target/karate-reports/. public/latest/karate
+          cp -R target/gatling/. public/latest/gatling-raw
+          sim=$(find public/latest/gatling-raw -maxdepth 1 -type d -name 'todosimulation-*' | head -1)
+          test -n "$sim" || (echo "gatling output not found"; exit 1)
+          mv "$sim" public/latest/gatling
+          rm -rf public/latest/gatling-raw
+          cat > public/latest/index.html <<'HTML'
+          <!doctype html>
+          <html>
+          <head><meta charset="utf-8"><title>karate-todo reports</title>
+          <style>body{font-family:system-ui,sans-serif;max-width:48rem;margin:3rem auto;padding:0 1rem}
+          a{display:block;padding:.5rem 0}</style></head>
+          <body>
+            <h1>karate-todo latest CI reports</h1>
+            <a href="karate/">Karate report</a>
+            <a href="gatling/">Gatling report</a>
+          </body>
+          </html>
+          HTML
+          cat > public/index.html <<'HTML'
+          <!doctype html>
+          <html>
+          <head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=latest/"></head>
+          <body><a href="latest/">latest reports</a></body>
+          </html>
+          HTML
+
+      # Push the generated static site to the gh-pages branch.
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
+          keep_files: false

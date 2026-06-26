@@ -1,0 +1,115 @@
+name: 01 - Foundation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  validate:
+    name: Validate Maven project
+    runs-on: ubuntu-latest
+    steps:
+      # Pull the repository onto the runner so later steps can read source files.
+      - uses: actions/checkout@v4
+
+      # Install Java 21 and enable the built-in Maven cache for faster repeat runs.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Confirm the project model is valid before running heavier jobs.
+      - name: Maven validate
+        run: ./mvnw -B validate
+
+  api-tests:
+    name: Run API tests
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Fresh checkout because each job runs on a new runner VM.
+      - uses: actions/checkout@v4
+
+      # Reinstall Java for this job.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Execute the default test suite, which covers the Karate API scenarios.
+      - name: Run API suite
+        run: ./mvnw -B test
+
+      # Keep the HTML reports so later inspection does not require rerunning tests locally.
+      - name: Upload API report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation-api-report
+          path: target/karate-reports
+          retention-days: 7
+
+  package:
+    name: Package application
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the source tree again for this isolated job.
+      - uses: actions/checkout@v4
+
+      # Install the project JDK and Maven cache.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Produce a jar artifact without rerunning tests that already passed above.
+      - name: Build jar
+        run: ./mvnw -B -DskipTests package
+
+      # Store the jar so the run has a concrete build output to inspect or download.
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation-jar
+          path: target/*.jar
+          retention-days: 7
+
+  dependencies:
+    name: Snapshot dependencies
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Check out source so Maven can resolve the project tree.
+      - uses: actions/checkout@v4
+
+      # Install Java again because jobs do not share state.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Write the resolved dependency graph to a file for supply-chain review.
+      - name: Generate dependency tree
+        run: ./mvnw -B dependency:tree -DoutputFile=target/dependency-tree.txt
+
+      # Publish the dependency tree as a downloadable artifact.
+      - name: Upload dependency tree
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation-dependency-tree
+          path: target/dependency-tree.txt
+          retention-days: 7

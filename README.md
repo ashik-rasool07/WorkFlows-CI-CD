@@ -91,47 +91,31 @@ The devcontainer ships with JDK 21, Maven, and Docker-in-Docker so every command
 Port 8080 auto-forwards for `LocalRunner`. After `./mvnw verify -Pui`, right-click any report `.html`
 and open it with Live Server.
 
-## CI/CD workflow
+## CI/CD workflows
 
-This repo now uses one GitHub Actions workflow:
+This repo now uses multiple workflow files that depend on each other with `workflow_run`.
 
-- [`.github/workflows/cicd.yml`](.github/workflows/cicd.yml)
+| Order | File | Trigger | What it does |
+|---|---|---|---|
+| 1 | [`.github/workflows/01-foundation.yml`](.github/workflows/01-foundation.yml) | `push`, `pull_request`, `workflow_dispatch` | Validate the Maven project, run API tests, package the app, and snapshot dependencies |
+| 2 | [`.github/workflows/02-ui-smoke.yml`](.github/workflows/02-ui-smoke.yml) | after `01 - Foundation`, or manual | Run Docker-backed UI tests and a simple app smoke test |
+| 3 | [`.github/workflows/03-security.yml`](.github/workflows/03-security.yml) | after `02 - UI And Smoke`, or manual | Run CodeQL and scan tracked files for secret patterns |
+| 4 | [`.github/workflows/04-performance.yml`](.github/workflows/04-performance.yml) | after `03 - Security Checks`, or manual | Start the app and run the Gatling performance smoke |
+| 5 | [`.github/workflows/05-publish.yml`](.github/workflows/05-publish.yml) | after `04 - Performance`, or manual | Regenerate reports and publish them to GitHub Pages |
 
-It is runnable on:
+How the dependency chain works:
 
-- push to `main`
-- pull requests
-- manual run from the GitHub Actions UI with `workflow_dispatch`
+1. `01 - Foundation` is the entry point.
+2. When it finishes successfully, GitHub triggers `02 - UI And Smoke`.
+3. After that, GitHub triggers `03 - Security Checks`.
+4. Then `04 - Performance` runs.
+5. Finally `05 - Publish Reports` runs.
 
-The workflow contains 10 jobs:
+Each workflow file contains inline comments explaining what each task does. Open the YAML files directly if you want the explanation next to the actual step definitions.
 
-| Job | What it teaches |
-|---|---|
-| `01 - Validate build` | Smallest useful CI job: checkout, Java setup, Maven cache, `validate` |
-| `02 - API tests` | Run API tests and upload reports as artifacts |
-| `03 - UI tests` | Run Docker-backed UI tests with Testcontainers |
-| `04 - Package artifact` | Build and store a jar artifact |
-| `05 - Smoke test app` | Start the app in the background and verify it responds |
-| `06 - Performance smoke` | Run Gatling against a live app instance |
-| `07 - Dependency snapshot` | Generate and upload a dependency tree |
-| `08 - CodeQL` | Static security analysis |
-| `09 - Secret scan` | Scan source and reports for secret patterns |
-| `10 - Publish reports` | Publish reports to GitHub Pages on `main` |
+Important limitation:
 
-Read it in this order:
-
-1. Validate
-2. API tests
-3. UI tests
-4. Package
-5. Smoke test
-6. Gatling
-7. Dependency snapshot
-8. CodeQL
-9. Secret scan
-10. Publish
-
-The jobs mix parallel and dependent execution so you can see both styles in one workflow graph.
+- GitHub Actions can chain workflows with `workflow_run`, but it cannot make one workflow wait on two different upstream workflows at the same time. That is why this repo uses a linear chain instead of a branching graph across files.
 
 Live reports: [karatelabs.github.io/karate-todo/latest/](https://karatelabs.github.io/karate-todo/latest/)
 
