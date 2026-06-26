@@ -236,22 +236,22 @@
   "name": "simple crud flow against the todo API",
   "relativePath": "target/test-classes/app/api/simple/simple.feature",
   "passed": true,
-  "durationMillis": 675,
-  "reportDate": "2026-06-26 14:02:33",
+  "durationMillis": 669,
+  "reportDate": "2026-06-26 14:14:21",
   "karateVersion": "2.1.0",
   "scenarios": [
     {
       "name": "simple crud flow",
       "line": 7,
       "passed": true,
-      "durationMillis": 78,
-      "startTime": 1782482553659,
-      "endTime": 1782482553737,
+      "durationMillis": 563,
+      "startTime": 1782483261654,
+      "endTime": 1782483262217,
       "refId": "[1:7]",
       "sectionIndex": 1,
       "exampleIndex": -1,
       "isOutlineExample": false,
-      "thread": "2",
+      "thread": "3",
       "tags": [
         "@smoke",
         "@api",
@@ -287,25 +287,25 @@
           "text": "post",
           "line": 10,
           "status": "passed",
-          "durationMillis": 15,
+          "durationMillis": 525,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n1 > POST http://localhost:18080/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:18080\n1 > Content-Length: 34\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+              "text": "request:\n1 > POST http://localhost:44261/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:44261\n1 > Content-Length: 34\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
             },
             {
               "lang": "json",
               "code": "{\n  \"title\": \"First\",\n  \"complete\": false\n}"
             },
             {
-              "text": "\n\nresponse time in milliseconds: 9\n1 < 201 POST http://localhost:18080/api/todos\n1 < content-length: 78\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "\n\nresponse time in milliseconds: 241\n1 < 201 POST http://localhost:44261/api/todos\n1 < content-length: 78\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "{\n  \"title\": \"First\",\n  \"complete\": false,\n  \"id\": \"f520bd4c-7121-4668-ad68-19b7d4671364\"\n}"
+              "code": "{\n  \"title\": \"First\",\n  \"complete\": false,\n  \"id\": \"1146b9c9-adb4-4def-bbf6-9734f060d702\"\n}"
             },
             {
-              "text": "\n\nPOST http://localhost:18080/api/todos\n201 (9 ms)\n"
+              "text": "\n\nPOST http://localhost:44261/api/todos\n201 (241 ms)\n"
             }
           ],
           "hasEmbeds": false,
@@ -328,7 +328,7 @@
           "text": "response == { id: '#string', title: 'First', complete: false }",
           "line": 12,
           "status": "passed",
-          "durationMillis": 0,
+          "durationMillis": 2,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -364,18 +364,18 @@
           "text": "get",
           "line": 17,
           "status": "passed",
-          "durationMillis": 11,
+          "durationMillis": 8,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n2 > GET http://localhost:18080/api/todos/f520bd4c-7121-4668-ad68-19b7d4671364\n2 > Cookie: karate.sid=singleton\n2 > Host: localhost:18080\n2 > Connection: keep-alive\n2 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 5\n2 < 200 GET http://localhost:18080/api/todos/f520bd4c-7121-4668-ad68-19b7d4671364\n2 < content-length: 78\n2 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n2 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "request:\n2 > GET http://localhost:44261/api/todos/1146b9c9-adb4-4def-bbf6-9734f060d702\n2 > Cookie: karate.sid=singleton\n2 > Host: localhost:44261\n2 > Connection: keep-alive\n2 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 5\n2 < 200 GET http://localhost:44261/api/todos/1146b9c9-adb4-4def-bbf6-9734f060d702\n2 < content-length: 78\n2 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n2 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "{\n  \"title\": \"First\",\n  \"complete\": false,\n  \"id\": \"f520bd4c-7121-4668-ad68-19b7d4671364\"\n}"
+              "code": "{\n  \"title\": \"First\",\n  \"complete\": false,\n  \"id\": \"1146b9c9-adb4-4def-bbf6-9734f060d702\"\n}"
             },
             {
-              "text": "\n\nGET http://localhost:18080/api/todos/f520bd4c-7121-4668-ad68-19b7d4671364\n200 (5 ms)\n"
+              "text": "\n\nGET http://localhost:44261/api/todos/1146b9c9-adb4-4def-bbf6-9734f060d702\n200 (5 ms)\n"
             }
           ],
           "hasEmbeds": false,
@@ -412,18 +412,18 @@
             "# get all todos and verify that the newly created todo is in the list"
           ],
           "status": "passed",
-          "durationMillis": 13,
+          "durationMillis": 12,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n3 > GET http://localhost:18080/api/todos\n3 > Cookie: karate.sid=singleton\n3 > Host: localhost:18080\n3 > Connection: keep-alive\n3 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 11\n3 < 200 GET http://localhost:18080/api/todos\n3 < content-length: 398\n3 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n3 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "request:\n3 > GET http://localhost:44261/api/todos\n3 > Cookie: karate.sid=singleton\n3 > Host: localhost:44261\n3 > Connection: keep-alive\n3 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 11\n3 < 200 GET http://localhost:44261/api/todos\n3 < content-length: 247\n3 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n3 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "[\n  {\n    \"title\": \"Three\",\n    \"complete\": false,\n    \"id\": \"2368b740-76bd-437e-9637-990fdf6ec341\"\n  },\n  {\n    \"title\": \"One\",\n    \"complete\": false,\n    \"id\": \"11966216-9060-44b6-9811-c6a8a65e08e3\"\n  },\n  {\n    \"title\": \"Two\",\n    \"complete\": false,\n    \"id\": \"5b9f3f40-e3d3-412a-a5b6-403ae135e4e0\"\n  },\n  {\n    \"title\": \"First\",\n    \"complete\": false,\n    \"id\": \"f520bd4c-7121-4668-ad68-19b7d4671364\"\n  },\n  {\n    \"title\": \"from-caller\",\n    \"complete\": false,\n    \"id\": \"366f05d2-b68c-4f98-b4fb-8c252f9a1324\"\n  }\n]"
+              "code": "[\n  {\n    \"title\": \"from-caller\",\n    \"complete\": false,\n    \"id\": \"a6d68863-efac-466b-ad77-1cffebb719bd\"\n  },\n  {\n    \"title\": \"nested-a\",\n    \"complete\": false,\n    \"id\": \"18e0321d-3240-4b09-9b4b-779e6714d927\"\n  },\n  {\n    \"title\": \"First\",\n    \"complete\": false,\n    \"id\": \"1146b9c9-adb4-4def-bbf6-9734f060d702\"\n  }\n]"
             },
             {
-              "text": "\n\nGET http://localhost:18080/api/todos\n200 (11 ms)\n"
+              "text": "\n\nGET http://localhost:44261/api/todos\n200 (11 ms)\n"
             }
           ],
           "hasEmbeds": false,
@@ -446,7 +446,7 @@
           "text": "response contains [{ id: '#(id)', title: 'First', complete: false }]",
           "line": 24,
           "status": "passed",
-          "durationMillis": 0,
+          "durationMillis": 1,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -471,25 +471,25 @@
           "text": "post",
           "line": 28,
           "status": "passed",
-          "durationMillis": 9,
+          "durationMillis": 6,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n4 > POST http://localhost:18080/api/todos\n4 > Cookie: karate.sid=singleton\n4 > Content-Type: application/json\n4 > Host: localhost:18080\n4 > Content-Length: 35\n4 > Connection: keep-alive\n4 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+              "text": "request:\n4 > POST http://localhost:44261/api/todos\n4 > Cookie: karate.sid=singleton\n4 > Content-Type: application/json\n4 > Host: localhost:44261\n4 > Content-Length: 35\n4 > Connection: keep-alive\n4 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
             },
             {
               "lang": "json",
               "code": "{\n  \"title\": \"Second\",\n  \"complete\": false\n}"
             },
             {
-              "text": "\n\nresponse time in milliseconds: 4\n4 < 201 POST http://localhost:18080/api/todos\n4 < content-length: 79\n4 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n4 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "\n\nresponse time in milliseconds: 3\n4 < 201 POST http://localhost:44261/api/todos\n4 < content-length: 79\n4 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n4 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "{\n  \"title\": \"Second\",\n  \"complete\": false,\n  \"id\": \"b28be398-b3ba-4fd5-8df4-c8a70563371a\"\n}"
+              "code": "{\n  \"title\": \"Second\",\n  \"complete\": false,\n  \"id\": \"7cb03e76-30d9-4668-9897-3642cc609912\"\n}"
             },
             {
-              "text": "\n\nPOST http://localhost:18080/api/todos\n201 (4 ms)\n"
+              "text": "\n\nPOST http://localhost:44261/api/todos\n201 (3 ms)\n"
             }
           ],
           "hasEmbeds": false,
@@ -537,18 +537,18 @@
             "# get all todos and verify that both the newly created ids are present"
           ],
           "status": "passed",
-          "durationMillis": 22,
+          "durationMillis": 5,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n5 > GET http://localhost:18080/api/todos\n5 > Cookie: karate.sid=singleton\n5 > Host: localhost:18080\n5 > Connection: keep-alive\n5 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 21\n5 < 200 GET http://localhost:18080/api/todos\n5 < content-length: 478\n5 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n5 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "request:\n5 > GET http://localhost:44261/api/todos\n5 > Cookie: karate.sid=singleton\n5 > Host: localhost:44261\n5 > Connection: keep-alive\n5 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 4\n5 < 200 GET http://localhost:44261/api/todos\n5 < content-length: 491\n5 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n5 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "[\n  {\n    \"title\": \"Three\",\n    \"complete\": false,\n    \"id\": \"2368b740-76bd-437e-9637-990fdf6ec341\"\n  },\n  {\n    \"title\": \"One\",\n    \"complete\": false,\n    \"id\": \"11966216-9060-44b6-9811-c6a8a65e08e3\"\n  },\n  {\n    \"title\": \"Two\",\n    \"complete\": false,\n    \"id\": \"5b9f3f40-e3d3-412a-a5b6-403ae135e4e0\"\n  },\n  {\n    \"title\": \"First\",\n    \"complete\": false,\n    \"id\": \"f520bd4c-7121-4668-ad68-19b7d4671364\"\n  },\n  {\n    \"title\": \"from-caller\",\n    \"complete\": false,\n    \"id\": \"366f05d2-b68c-4f98-b4fb-8c252f9a1324\"\n  },\n  {\n    \"title\": \"Second\",\n    \"complete\": false,\n    \"id\": \"b28be398-b3ba-4fd5-8df4-c8a70563371a\"\n  }\n]"
+              "code": "[\n  {\n    \"title\": \"from-caller\",\n    \"complete\": false,\n    \"id\": \"a6d68863-efac-466b-ad77-1cffebb719bd\"\n  },\n  {\n    \"title\": \"nested-a\",\n    \"complete\": false,\n    \"id\": \"18e0321d-3240-4b09-9b4b-779e6714d927\"\n  },\n  {\n    \"title\": \"First\",\n    \"complete\": false,\n    \"id\": \"1146b9c9-adb4-4def-bbf6-9734f060d702\"\n  },\n  {\n    \"title\": \"nested-b\",\n    \"complete\": false,\n    \"id\": \"73420082-133a-4b6f-a072-56571f73cf6f\"\n  },\n  {\n    \"title\": \"Second\",\n    \"complete\": false,\n    \"id\": \"7cb03e76-30d9-4668-9897-3642cc609912\"\n  },\n  {\n    \"title\": \"nested-c\",\n    \"complete\": false,\n    \"id\": \"fa945f94-ef68-4ab2-9960-b17b60a1671c\"\n  }\n]"
             },
             {
-              "text": "\n\nGET http://localhost:18080/api/todos\n200 (21 ms)\n"
+              "text": "\n\nGET http://localhost:44261/api/todos\n200 (4 ms)\n"
             }
           ],
           "hasEmbeds": false,
@@ -571,7 +571,7 @@
           "text": "response contains [{ id: '#string', title: 'First', complete: false },{ id: '#(id)', title: 'Second', complete: false }]",
           "line": 36,
           "status": "passed",
-          "durationMillis": 1,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false

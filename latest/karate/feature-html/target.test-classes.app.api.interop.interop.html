@@ -236,8 +236,8 @@
   "name": "Java interop from feature files",
   "relativePath": "target/test-classes/app/api/interop/interop.feature",
   "passed": true,
-  "durationMillis": 722,
-  "reportDate": "2026-06-26 14:02:33",
+  "durationMillis": 105,
+  "reportDate": "2026-06-26 14:14:21",
   "karateVersion": "2.1.0",
   "scenarios": [
     {
@@ -245,63 +245,10 @@
       "line": 4,
       "passed": true,
       "durationMillis": 30,
-      "startTime": 1782482553712,
-      "endTime": 1782482553742,
+      "startTime": 1782483261613,
+      "endTime": 1782483261643,
       "refId": "[1:4]",
       "sectionIndex": 1,
-      "exampleIndex": -1,
-      "isOutlineExample": false,
-      "thread": "3",
-      "tags": [
-        "@api",
-        "@java-interop"
-      ],
-      "skipped": false,
-      "steps": [
-        {
-          "prefix": "*",
-          "keyword": "def",
-          "text": "helper = Java.type('app.api.interop.Helper')",
-          "line": 5,
-          "status": "passed",
-          "durationMillis": 20,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        },
-        {
-          "prefix": "*",
-          "keyword": "def",
-          "text": "result = helper.doWork('hello world')",
-          "line": 6,
-          "status": "passed",
-          "durationMillis": 7,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        },
-        {
-          "prefix": "*",
-          "keyword": "match",
-          "text": "result == { \"message\": \"hello world\" }",
-          "line": 7,
-          "status": "passed",
-          "durationMillis": 0,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        }
-      ]
-    },
-    {
-      "name": null,
-      "line": 9,
-      "passed": true,
-      "durationMillis": 48,
-      "startTime": 1782482553740,
-      "endTime": 1782482553788,
-      "refId": "[2:9]",
-      "sectionIndex": 2,
       "exampleIndex": -1,
       "isOutlineExample": false,
       "thread": "2",
@@ -315,9 +262,62 @@
           "prefix": "*",
           "keyword": "def",
           "text": "helper = Java.type('app.api.interop.Helper')",
+          "line": 5,
+          "status": "passed",
+          "durationMillis": 3,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        },
+        {
+          "prefix": "*",
+          "keyword": "def",
+          "text": "result = helper.doWork('hello world')",
+          "line": 6,
+          "status": "passed",
+          "durationMillis": 1,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        },
+        {
+          "prefix": "*",
+          "keyword": "match",
+          "text": "result == { \"message\": \"hello world\" }",
+          "line": 7,
+          "status": "passed",
+          "durationMillis": 25,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        }
+      ]
+    },
+    {
+      "name": null,
+      "line": 9,
+      "passed": true,
+      "durationMillis": 34,
+      "startTime": 1782483261612,
+      "endTime": 1782483261646,
+      "refId": "[2:9]",
+      "sectionIndex": 2,
+      "exampleIndex": -1,
+      "isOutlineExample": false,
+      "thread": "3",
+      "tags": [
+        "@api",
+        "@java-interop"
+      ],
+      "skipped": false,
+      "steps": [
+        {
+          "prefix": "*",
+          "keyword": "def",
+          "text": "helper = Java.type('app.api.interop.Helper')",
           "line": 10,
           "status": "passed",
-          "durationMillis": 0,
+          "durationMillis": 2,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -328,7 +328,7 @@
           "text": "encoded = karate.readAsBytes('encoded.bin')",
           "line": 11,
           "status": "passed",
-          "durationMillis": 0,
+          "durationMillis": 2,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -339,7 +339,7 @@
           "text": "decoded = helper.fromBrotli(encoded)",
           "line": 12,
           "status": "passed",
-          "durationMillis": 34,
+          "durationMillis": 25,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -350,7 +350,7 @@
           "text": "decoded == '{ \"hello\": \"world\" }'",
           "line": 13,
           "status": "passed",
-          "durationMillis": 9,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -361,7 +361,7 @@
           "text": "json = karate.fromString(decoded)",
           "line": 14,
           "status": "passed",
-          "durationMillis": 2,
+          "durationMillis": 1,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
