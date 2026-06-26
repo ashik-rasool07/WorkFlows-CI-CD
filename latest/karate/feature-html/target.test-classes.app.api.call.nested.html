@@ -236,22 +236,22 @@
   "name": "nested called features — a chain of reusable helpers",
   "relativePath": "target/test-classes/app/api/call/nested.feature",
   "passed": true,
-  "durationMillis": 896,
-  "reportDate": "2026-06-26 15:07:29",
+  "durationMillis": 650,
+  "reportDate": "2026-06-26 15:08:47",
   "karateVersion": "2.1.0",
   "scenarios": [
     {
       "name": "create several todos by chaining helpers",
       "line": 11,
       "passed": true,
-      "durationMillis": 85,
-      "startTime": 1782486450114,
-      "endTime": 1782486450199,
+      "durationMillis": 545,
+      "startTime": 1782486527851,
+      "endTime": 1782486528396,
       "refId": "[1:11]",
       "sectionIndex": 1,
       "exampleIndex": -1,
       "isOutlineExample": false,
-      "thread": "1",
+      "thread": "3",
       "tags": [
         "@api",
         "@call"
@@ -275,7 +275,7 @@
           "text": "created = call read('nested-batch.feature') { titles: '#(titles)' }",
           "line": 13,
           "status": "passed",
-          "durationMillis": 65,
+          "durationMillis": 524,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": true,
@@ -285,22 +285,22 @@
               "name": "middle-layer helper — invokes called.feature once per title",
               "relativePath": "target/test-classes/app/api/call/nested-batch.feature",
               "passed": true,
-              "durationMillis": 58,
-              "reportDate": "2026-06-26 15:07:30",
+              "durationMillis": 523,
+              "reportDate": "2026-06-26 15:08:47",
               "karateVersion": "2.1.0",
               "scenarios": [
                 {
                   "name": null,
                   "line": 8,
                   "passed": true,
-                  "durationMillis": 55,
-                  "startTime": 1782486450125,
-                  "endTime": 1782486450180,
+                  "durationMillis": 522,
+                  "startTime": 1782486527853,
+                  "endTime": 1782486528375,
                   "refId": "[1:8]",
                   "sectionIndex": 1,
                   "exampleIndex": -1,
                   "isOutlineExample": false,
-                  "thread": "1",
+                  "thread": "3",
                   "tags": [
                     "@ignore"
                   ],
@@ -312,7 +312,7 @@
                       "text": "results = call read('called.feature') titles",
                       "line": 9,
                       "status": "passed",
-                      "durationMillis": 54,
+                      "durationMillis": 520,
                       "hasLogs": false,
                       "hasEmbeds": false,
                       "hasCallResults": true,
@@ -322,22 +322,22 @@
                           "name": "reusable helper that creates a todo and returns its id",
                           "relativePath": "target/test-classes/app/api/call/called.feature",
                           "passed": true,
-                          "durationMillis": 19,
-                          "reportDate": "2026-06-26 15:07:30",
+                          "durationMillis": 466,
+                          "reportDate": "2026-06-26 15:08:47",
                           "karateVersion": "2.1.0",
                           "scenarios": [
                             {
                               "name": null,
                               "line": 9,
                               "passed": true,
-                              "durationMillis": 19,
-                              "startTime": 1782486450126,
-                              "endTime": 1782486450145,
+                              "durationMillis": 462,
+                              "startTime": 1782486527861,
+                              "endTime": 1782486528323,
                               "refId": "[1:9]",
                               "sectionIndex": 1,
                               "exampleIndex": -1,
                               "isOutlineExample": false,
-                              "thread": "1",
+                              "thread": "3",
                               "tags": [
                                 "@ignore"
                               ],
@@ -371,25 +371,25 @@
                                   "text": "post",
                                   "line": 12,
                                   "status": "passed",
-                                  "durationMillis": 17,
+                                  "durationMillis": 461,
                                   "hasLogs": true,
                                   "logSegments": [
                                     {
-                                      "text": "request:\n1 > POST http://localhost:43197/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:43197\n1 > Content-Length: 37\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+                                      "text": "request:\n1 > POST http://localhost:37475/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:37475\n1 > Content-Length: 37\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
                                     },
                                     {
                                       "lang": "json",
                                       "code": "{\n  \"title\": \"nested-a\",\n  \"complete\": false\n}"
                                     },
                                     {
-                                      "text": "\n\nresponse time in milliseconds: 11\n1 < 201 POST http://localhost:43197/api/todos\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+                                      "text": "\n\nresponse time in milliseconds: 185\n1 < 201 POST http://localhost:37475/api/todos\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
                                     },
                                     {
                                       "lang": "json",
-                                      "code": "{\n  \"title\": \"nested-a\",\n  \"complete\": false,\n  \"id\": \"04679db3-5ab3-47b9-a277-50b27da99779\"\n}"
+                                      "code": "{\n  \"title\": \"nested-a\",\n  \"complete\": false,\n  \"id\": \"5f89e828-d816-44d3-b708-0c98b6b1dd73\"\n}"
                                     },
                                     {
-                                      "text": "\n\nPOST http://localhost:43197/api/todos\n201 (11 ms)\n"
+                                      "text": "\n\nPOST http://localhost:37475/api/todos\n201 (185 ms)\n"
                                     }
                                   ],
                                   "hasEmbeds": false,
@@ -427,7 +427,7 @@
                           "relativePath": "target/test-classes/app/api/call/called.feature",
                           "passed": true,
                           "durationMillis": 18,
-                          "reportDate": "2026-06-26 15:07:30",
+                          "reportDate": "2026-06-26 15:08:48",
                           "karateVersion": "2.1.0",
                           "scenarios": [
                             {
@@ -435,13 +435,13 @@
                               "line": 9,
                               "passed": true,
                               "durationMillis": 17,
-                              "startTime": 1782486450146,
-                              "endTime": 1782486450163,
+                              "startTime": 1782486528325,
+                              "endTime": 1782486528342,
                               "refId": "[1:9]",
                               "sectionIndex": 1,
                               "exampleIndex": -1,
                               "isOutlineExample": false,
-                              "thread": "1",
+                              "thread": "3",
                               "tags": [
                                 "@ignore"
                               ],
@@ -475,25 +475,25 @@
                                   "text": "post",
                                   "line": 12,
                                   "status": "passed",
-                                  "durationMillis": 16,
+                                  "durationMillis": 17,
                                   "hasLogs": true,
                                   "logSegments": [
                                     {
-                                      "text": "request:\n1 > POST http://localhost:43197/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:43197\n1 > Content-Length: 37\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+                                      "text": "request:\n1 > POST http://localhost:37475/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:37475\n1 > Content-Length: 37\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
                                     },
                                     {
                                       "lang": "json",
                                       "code": "{\n  \"title\": \"nested-b\",\n  \"complete\": false\n}"
                                     },
                                     {
-                                      "text": "\n\nresponse time in milliseconds: 11\n1 < 201 POST http://localhost:43197/api/todos\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+                                      "text": "\n\nresponse time in milliseconds: 10\n1 < 201 POST http://localhost:37475/api/todos\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
                                     },
                                     {
                                       "lang": "json",
-                                      "code": "{\n  \"title\": \"nested-b\",\n  \"complete\": false,\n  \"id\": \"3ee1df17-f43a-4bd3-ad86-84228dfcb48e\"\n}"
+                                      "code": "{\n  \"title\": \"nested-b\",\n  \"complete\": false,\n  \"id\": \"2e1f7554-841f-4a9a-a4c1-9f8773e107e6\"\n}"
                                     },
                                     {
-                                      "text": "\n\nPOST http://localhost:43197/api/todos\n201 (11 ms)\n"
+                                      "text": "\n\nPOST http://localhost:37475/api/todos\n201 (10 ms)\n"
                                     }
                                   ],
                                   "hasEmbeds": false,
@@ -530,22 +530,22 @@
                           "name": "reusable helper that creates a todo and returns its id",
                           "relativePath": "target/test-classes/app/api/call/called.feature",
                           "passed": true,
-                          "durationMillis": 16,
-                          "reportDate": "2026-06-26 15:07:30",
+                          "durationMillis": 31,
+                          "reportDate": "2026-06-26 15:08:48",
                           "karateVersion": "2.1.0",
                           "scenarios": [
                             {
                               "name": null,
                               "line": 9,
                               "passed": true,
-                              "durationMillis": 16,
-                              "startTime": 1782486450163,
-                              "endTime": 1782486450179,
+                              "durationMillis": 27,
+                              "startTime": 1782486528346,
+                              "endTime": 1782486528373,
                               "refId": "[1:9]",
                               "sectionIndex": 1,
                               "exampleIndex": -1,
                               "isOutlineExample": false,
-                              "thread": "1",
+                              "thread": "3",
                               "tags": [
                                 "@ignore"
                               ],
@@ -557,7 +557,7 @@
                                   "text": "apiUrl + '/api/todos'",
                                   "line": 10,
                                   "status": "passed",
-                                  "durationMillis": 0,
+                                  "durationMillis": 1,
                                   "hasLogs": false,
                                   "hasEmbeds": false,
                                   "hasCallResults": false
@@ -579,25 +579,25 @@
                                   "text": "post",
                                   "line": 12,
                                   "status": "passed",
-                                  "durationMillis": 15,
+                                  "durationMillis": 24,
                                   "hasLogs": true,
                                   "logSegments": [
                                     {
-                                      "text": "request:\n1 > POST http://localhost:43197/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:43197\n1 > Content-Length: 37\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+                                      "text": "request:\n1 > POST http://localhost:37475/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:37475\n1 > Content-Length: 37\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
                                     },
                                     {
                                       "lang": "json",
                                       "code": "{\n  \"title\": \"nested-c\",\n  \"complete\": false\n}"
                                     },
                                     {
-                                      "text": "\n\nresponse time in milliseconds: 9\n1 < 201 POST http://localhost:43197/api/todos\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+                                      "text": "\n\nresponse time in milliseconds: 21\n1 < 201 POST http://localhost:37475/api/todos\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
                                     },
                                     {
                                       "lang": "json",
-                                      "code": "{\n  \"title\": \"nested-c\",\n  \"complete\": false,\n  \"id\": \"5ecc98b5-ead2-416f-9912-7f7990c6e70a\"\n}"
+                                      "code": "{\n  \"title\": \"nested-c\",\n  \"complete\": false,\n  \"id\": \"2f9b36d5-c6a6-4283-a720-aca2796d46a2\"\n}"
                                     },
                                     {
-                                      "text": "\n\nPOST http://localhost:43197/api/todos\n201 (9 ms)\n"
+                                      "text": "\n\nPOST http://localhost:37475/api/todos\n201 (21 ms)\n"
                                     }
                                   ],
                                   "hasEmbeds": false,
@@ -637,7 +637,7 @@
                       "text": "ids = karate.map(results, function(r){ return r.id })",
                       "line": 10,
                       "status": "passed",
-                      "durationMillis": 0,
+                      "durationMillis": 1,
                       "hasLogs": false,
                       "hasEmbeds": false,
                       "hasCallResults": false
@@ -654,7 +654,7 @@
           "text": "created.ids == '#[3]'",
           "line": 14,
           "status": "passed",
-          "durationMillis": 2,
+          "durationMillis": 1,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -679,18 +679,18 @@
           "text": "get",
           "line": 18,
           "status": "passed",
-          "durationMillis": 16,
+          "durationMillis": 19,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n1 > GET http://localhost:43197/api/todos/04679db3-5ab3-47b9-a277-50b27da99779\n1 > Host: localhost:43197\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 10\n1 < 200 GET http://localhost:43197/api/todos/04679db3-5ab3-47b9-a277-50b27da99779\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "request:\n1 > GET http://localhost:37475/api/todos/5f89e828-d816-44d3-b708-0c98b6b1dd73\n1 > Host: localhost:37475\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 16\n1 < 200 GET http://localhost:37475/api/todos/5f89e828-d816-44d3-b708-0c98b6b1dd73\n1 < content-length: 81\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "{\n  \"title\": \"nested-a\",\n  \"complete\": false,\n  \"id\": \"04679db3-5ab3-47b9-a277-50b27da99779\"\n}"
+              "code": "{\n  \"title\": \"nested-a\",\n  \"complete\": false,\n  \"id\": \"5f89e828-d816-44d3-b708-0c98b6b1dd73\"\n}"
             },
             {
-              "text": "\n\nGET http://localhost:43197/api/todos/04679db3-5ab3-47b9-a277-50b27da99779\n200 (10 ms)\n"
+              "text": "\n\nGET http://localhost:37475/api/todos/5f89e828-d816-44d3-b708-0c98b6b1dd73\n200 (16 ms)\n"
             }
           ],
           "hasEmbeds": false,

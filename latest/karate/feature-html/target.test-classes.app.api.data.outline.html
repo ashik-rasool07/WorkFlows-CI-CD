@@ -236,20 +236,115 @@
   "name": "simple data driven testing",
   "relativePath": "target/test-classes/app/api/data/outline.feature",
   "passed": true,
-  "durationMillis": 803,
-  "reportDate": "2026-06-26 15:07:29",
+  "durationMillis": 671,
+  "reportDate": "2026-06-26 15:08:47",
   "karateVersion": "2.1.0",
   "scenarios": [
     {
       "name": "using title: One",
       "line": 13,
       "passed": true,
-      "durationMillis": 735,
-      "startTime": 1782486449364,
-      "endTime": 1782486450099,
+      "durationMillis": 15,
+      "startTime": 1782486528386,
+      "endTime": 1782486528401,
       "refId": "[1.1:13]",
       "sectionIndex": 1,
       "exampleIndex": 0,
+      "isOutlineExample": true,
+      "thread": "2",
+      "tags": [
+        "@api",
+        "@data-driven",
+        "@crud"
+      ],
+      "skipped": false,
+      "steps": [
+        {
+          "prefix": "*",
+          "keyword": "url",
+          "text": "apiUrl + '/api/todos'",
+          "line": 5,
+          "status": "passed",
+          "durationMillis": 0,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        },
+        {
+          "prefix": "*",
+          "keyword": "request",
+          "text": "{ title: '#(title)', complete: false }",
+          "line": 8,
+          "status": "passed",
+          "durationMillis": 0,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        },
+        {
+          "prefix": "*",
+          "keyword": "method",
+          "text": "post",
+          "line": 9,
+          "status": "passed",
+          "durationMillis": 14,
+          "hasLogs": true,
+          "logSegments": [
+            {
+              "text": "request:\n1 > POST http://localhost:37475/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:37475\n1 > Content-Length: 32\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+            },
+            {
+              "lang": "json",
+              "code": "{\n  \"title\": \"One\",\n  \"complete\": false\n}"
+            },
+            {
+              "text": "\n\nresponse time in milliseconds: 12\n1 < 201 POST http://localhost:37475/api/todos\n1 < content-length: 76\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+            },
+            {
+              "lang": "json",
+              "code": "{\n  \"title\": \"One\",\n  \"complete\": false,\n  \"id\": \"422a66d9-d956-4697-8b34-99718e774e03\"\n}"
+            },
+            {
+              "text": "\n\nPOST http://localhost:37475/api/todos\n201 (12 ms)\n"
+            }
+          ],
+          "hasEmbeds": false,
+          "hasCallResults": false
+        },
+        {
+          "prefix": "*",
+          "keyword": "status",
+          "text": "201",
+          "line": 10,
+          "status": "passed",
+          "durationMillis": 0,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        },
+        {
+          "prefix": "*",
+          "keyword": "match",
+          "text": "response == { id: '#string', title: '#(title)', complete: false }",
+          "line": 11,
+          "status": "passed",
+          "durationMillis": 0,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        }
+      ]
+    },
+    {
+      "name": "using title: Two",
+      "line": 13,
+      "passed": true,
+      "durationMillis": 14,
+      "startTime": 1782486528401,
+      "endTime": 1782486528415,
+      "refId": "[1.2:13]",
+      "sectionIndex": 1,
+      "exampleIndex": 1,
       "isOutlineExample": true,
       "thread": "3",
       "tags": [
@@ -276,131 +371,36 @@
           "text": "{ title: '#(title)', complete: false }",
           "line": 8,
           "status": "passed",
+          "durationMillis": 0,
+          "hasLogs": false,
+          "hasEmbeds": false,
+          "hasCallResults": false
+        },
+        {
+          "prefix": "*",
+          "keyword": "method",
+          "text": "post",
+          "line": 9,
+          "status": "passed",
           "durationMillis": 13,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        },
-        {
-          "prefix": "*",
-          "keyword": "method",
-          "text": "post",
-          "line": 9,
-          "status": "passed",
-          "durationMillis": 714,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n1 > POST http://localhost:43197/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:43197\n1 > Content-Length: 32\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
-            },
-            {
-              "lang": "json",
-              "code": "{\n  \"title\": \"One\",\n  \"complete\": false\n}"
-            },
-            {
-              "text": "\n\nresponse time in milliseconds: 415\n1 < 201 POST http://localhost:43197/api/todos\n1 < content-length: 76\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
-            },
-            {
-              "lang": "json",
-              "code": "{\n  \"title\": \"One\",\n  \"complete\": false,\n  \"id\": \"ab1ab954-d008-4398-bcaf-79db9b3fdc72\"\n}"
-            },
-            {
-              "text": "\n\nPOST http://localhost:43197/api/todos\n201 (415 ms)\n"
-            }
-          ],
-          "hasEmbeds": false,
-          "hasCallResults": false
-        },
-        {
-          "prefix": "*",
-          "keyword": "status",
-          "text": "201",
-          "line": 10,
-          "status": "passed",
-          "durationMillis": 0,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        },
-        {
-          "prefix": "*",
-          "keyword": "match",
-          "text": "response == { id: '#string', title: '#(title)', complete: false }",
-          "line": 11,
-          "status": "passed",
-          "durationMillis": 6,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        }
-      ]
-    },
-    {
-      "name": "using title: Two",
-      "line": 13,
-      "passed": true,
-      "durationMillis": 738,
-      "startTime": 1782486449363,
-      "endTime": 1782486450101,
-      "refId": "[1.2:13]",
-      "sectionIndex": 1,
-      "exampleIndex": 1,
-      "isOutlineExample": true,
-      "thread": "1",
-      "tags": [
-        "@api",
-        "@data-driven",
-        "@crud"
-      ],
-      "skipped": false,
-      "steps": [
-        {
-          "prefix": "*",
-          "keyword": "url",
-          "text": "apiUrl + '/api/todos'",
-          "line": 5,
-          "status": "passed",
-          "durationMillis": 0,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        },
-        {
-          "prefix": "*",
-          "keyword": "request",
-          "text": "{ title: '#(title)', complete: false }",
-          "line": 8,
-          "status": "passed",
-          "durationMillis": 14,
-          "hasLogs": false,
-          "hasEmbeds": false,
-          "hasCallResults": false
-        },
-        {
-          "prefix": "*",
-          "keyword": "method",
-          "text": "post",
-          "line": 9,
-          "status": "passed",
-          "durationMillis": 712,
-          "hasLogs": true,
-          "logSegments": [
-            {
-              "text": "request:\n1 > POST http://localhost:43197/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:43197\n1 > Content-Length: 32\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+              "text": "request:\n1 > POST http://localhost:37475/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:37475\n1 > Content-Length: 32\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
             },
             {
               "lang": "json",
               "code": "{\n  \"title\": \"Two\",\n  \"complete\": false\n}"
             },
             {
-              "text": "\n\nresponse time in milliseconds: 418\n1 < 201 POST http://localhost:43197/api/todos\n1 < content-length: 76\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "\n\nresponse time in milliseconds: 7\n1 < 201 POST http://localhost:37475/api/todos\n1 < content-length: 76\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "{\n  \"title\": \"Two\",\n  \"complete\": false,\n  \"id\": \"2c77f993-10ca-4229-b540-8d59438d4646\"\n}"
+              "code": "{\n  \"title\": \"Two\",\n  \"complete\": false,\n  \"id\": \"38ca4b99-7b25-45d7-8ac7-6f620f07598b\"\n}"
             },
             {
-              "text": "\n\nPOST http://localhost:43197/api/todos\n201 (418 ms)\n"
+              "text": "\n\nPOST http://localhost:37475/api/todos\n201 (7 ms)\n"
             }
           ],
           "hasEmbeds": false,
@@ -423,7 +423,7 @@
           "text": "response == { id: '#string', title: '#(title)', complete: false }",
           "line": 11,
           "status": "passed",
-          "durationMillis": 9,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -434,9 +434,9 @@
       "name": "using title: Three",
       "line": 13,
       "passed": true,
-      "durationMillis": 739,
-      "startTime": 1782486449364,
-      "endTime": 1782486450103,
+      "durationMillis": 15,
+      "startTime": 1782486528405,
+      "endTime": 1782486528420,
       "refId": "[1.3:13]",
       "sectionIndex": 1,
       "exampleIndex": 2,
@@ -466,7 +466,7 @@
           "text": "{ title: '#(title)', complete: false }",
           "line": 8,
           "status": "passed",
-          "durationMillis": 13,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -477,25 +477,25 @@
           "text": "post",
           "line": 9,
           "status": "passed",
-          "durationMillis": 715,
+          "durationMillis": 14,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n1 > POST http://localhost:43197/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:43197\n1 > Content-Length: 34\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+              "text": "request:\n1 > POST http://localhost:37475/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:37475\n1 > Content-Length: 34\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
             },
             {
               "lang": "json",
               "code": "{\n  \"title\": \"Three\",\n  \"complete\": false\n}"
             },
             {
-              "text": "\n\nresponse time in milliseconds: 418\n1 < 201 POST http://localhost:43197/api/todos\n1 < content-length: 78\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "\n\nresponse time in milliseconds: 9\n1 < 201 POST http://localhost:37475/api/todos\n1 < content-length: 78\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "{\n  \"title\": \"Three\",\n  \"complete\": false,\n  \"id\": \"d44f48f2-b7cf-41a8-997e-8de8259fce55\"\n}"
+              "code": "{\n  \"title\": \"Three\",\n  \"complete\": false,\n  \"id\": \"923a8f05-a60c-4638-b0e5-ec023c33cd2f\"\n}"
             },
             {
-              "text": "\n\nPOST http://localhost:43197/api/todos\n201 (418 ms)\n"
+              "text": "\n\nPOST http://localhost:37475/api/todos\n201 (9 ms)\n"
             }
           ],
           "hasEmbeds": false,
@@ -518,7 +518,7 @@
           "text": "response == { id: '#string', title: '#(title)', complete: false }",
           "line": 11,
           "status": "passed",
-          "durationMillis": 8,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
