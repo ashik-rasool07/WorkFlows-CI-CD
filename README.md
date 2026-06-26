@@ -91,31 +91,37 @@ The devcontainer ships with JDK 21, Maven, and Docker-in-Docker so every command
 Port 8080 auto-forwards for `LocalRunner`. After `./mvnw verify -Pui`, right-click any report `.html`
 and open it with Live Server.
 
-## CI/CD workflows
+## CI/CD workflow
 
-This repo now uses multiple workflow files that depend on each other with `workflow_run`.
+This repo now uses one large workflow file:
 
-| Order | File | Trigger | What it does |
-|---|---|---|---|
-| 1 | [`.github/workflows/01-foundation.yml`](.github/workflows/01-foundation.yml) | `push`, `pull_request`, `workflow_dispatch` | Validate the Maven project, run API tests, package the app, and snapshot dependencies |
-| 2 | [`.github/workflows/02-ui-smoke.yml`](.github/workflows/02-ui-smoke.yml) | after `01 - Foundation`, or manual | Run Docker-backed UI tests and a simple app smoke test |
-| 3 | [`.github/workflows/03-security.yml`](.github/workflows/03-security.yml) | after `02 - UI And Smoke`, or manual | Run CodeQL and scan tracked files for secret patterns |
-| 4 | [`.github/workflows/04-performance.yml`](.github/workflows/04-performance.yml) | after `03 - Security Checks`, or manual | Start the app and run the Gatling performance smoke |
-| 5 | [`.github/workflows/05-publish.yml`](.github/workflows/05-publish.yml) | after `04 - Performance`, or manual | Regenerate reports and publish them to GitHub Pages |
+- [`.github/workflows/cicd.yml`](.github/workflows/cicd.yml)
 
-How the dependency chain works:
+It is designed to create one big workflow graph in GitHub Actions, with multiple jobs depending on each other.
 
-1. `01 - Foundation` is the entry point.
-2. When it finishes successfully, GitHub triggers `02 - UI And Smoke`.
-3. After that, GitHub triggers `03 - Security Checks`.
-4. Then `04 - Performance` runs.
-5. Finally `05 - Publish Reports` runs.
+| Job | Depends on | What it does |
+|---|---|---|
+| `01 - Validate build` | none | Validates the Maven project |
+| `02 - API tests` | `01` | Runs the API suite and uploads reports |
+| `03 - UI tests` | `01` | Runs Docker-backed UI tests |
+| `04 - Package artifact` | `01` | Builds a jar artifact |
+| `05 - Smoke test app` | `02`, `04` | Starts the app and verifies it responds |
+| `06 - Performance smoke` | `05` | Runs the Gatling performance smoke |
+| `07 - Dependency snapshot` | `01` | Generates a dependency tree |
+| `08 - CodeQL` | `01` | Runs static security analysis |
+| `09 - Secret scan` | `06` | Scans source and report artifacts for secret patterns |
+| `10 - Publish reports` | `03`, `09` | Publishes the reports to GitHub Pages on `main` |
 
-Each workflow file contains inline comments explaining what each task does. Open the YAML files directly if you want the explanation next to the actual step definitions.
+This shape is intentional:
 
-Important limitation:
+1. `01` starts the pipeline.
+2. `02`, `03`, `04`, `07`, and `08` branch out from it.
+3. `05` waits on both `02` and `04`.
+4. `06` waits on `05`.
+5. `09` waits on `06`.
+6. `10` waits on both `03` and `09`.
 
-- GitHub Actions can chain workflows with `workflow_run`, but it cannot make one workflow wait on two different upstream workflows at the same time. That is why this repo uses a linear chain instead of a branching graph across files.
+The YAML file includes inline comments so the purpose of each task is explained next to the actual step.
 
 Live reports: [karatelabs.github.io/karate-todo/latest/](https://karatelabs.github.io/karate-todo/latest/)
 

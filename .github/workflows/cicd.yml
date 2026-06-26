@@ -1,0 +1,386 @@
+name: cicd.yml
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+  security-events: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  validate:
+    name: 01 - Validate build
+    runs-on: ubuntu-latest
+    steps:
+      # Copy the repository onto the runner.
+      - uses: actions/checkout@v4
+
+      # Install Java 21 and enable Maven dependency caching.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Check that the Maven project model is valid.
+      - name: Maven validate
+        run: ./mvnw -B validate
+
+  api-tests:
+    name: 02 - API tests
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Each job gets a fresh runner, so check out the repo again.
+      - uses: actions/checkout@v4
+
+      # Reinstall the Java toolchain for this job.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Run the default Karate API test suite.
+      - name: Run API suite
+        run: ./mvnw -B test
+
+      # Save the generated report for later inspection and publish steps.
+      - name: Upload Karate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: karate-report
+          path: target/karate-reports
+          retention-days: 14
+
+  ui-tests:
+    name: 03 - UI tests
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Pull the source tree for the UI job.
+      - uses: actions/checkout@v4
+
+      # Install Java and restore Maven dependencies.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Run the Docker-backed UI profile.
+      - name: Run UI suite
+        run: ./mvnw -B verify -Pui
+
+      # Preserve the UI report and screenshots.
+      - name: Upload UI report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-report
+          path: target/karate-reports
+          retention-days: 14
+
+  package:
+    name: 04 - Package artifact
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the app sources for packaging.
+      - uses: actions/checkout@v4
+
+      # Install Java 21 for the Maven package goal.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Build the jar without rerunning tests.
+      - name: Build jar
+        run: ./mvnw -B -DskipTests package
+
+      # Upload the jar as a downloadable artifact.
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
+          retention-days: 14
+
+  smoke-test:
+    name: 05 - Smoke test app
+    needs:
+      - api-tests
+      - package
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the project on a clean runner.
+      - uses: actions/checkout@v4
+
+      # Install Java so the local runner can start the app.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Start the TODO app and wait for it to answer on port 8080.
+      - name: Start app in background
+        shell: bash
+        run: |
+          mkdir -p target
+          nohup ./mvnw -B test -Dtest=LocalRunner > target/local-runner.log 2>&1 &
+          echo $! > target/local-runner.pid
+          for i in {1..60}; do
+            if curl -fsS http://localhost:8080/ > target/home.html; then
+              break
+            fi
+            sleep 1
+          done
+          test -f target/home.html || (echo "app did not start"; cat target/local-runner.log; exit 1)
+
+      # Assert the home page looks like the app we expect.
+      - name: Assert home page
+        shell: bash
+        run: grep -qi "todo" target/home.html
+
+      # Stop the background process even if the smoke test fails.
+      - name: Stop app
+        if: always()
+        shell: bash
+        run: kill "$(cat target/local-runner.pid)" || true
+
+      # Keep the startup log for debugging.
+      - name: Upload smoke log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-log
+          path: target/local-runner.log
+          retention-days: 7
+
+  gatling:
+    name: 06 - Performance smoke
+    needs: smoke-test
+    runs-on: ubuntu-latest
+    steps:
+      # Load the repository for the performance job.
+      - uses: actions/checkout@v4
+
+      # Install Java for the local runner and the Gatling Maven plugin.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Start the app before running the Gatling simulation.
+      - name: Start app in background
+        shell: bash
+        run: |
+          mkdir -p target
+          nohup ./mvnw -B test -Dtest=LocalRunner > target/local-runner.log 2>&1 &
+          echo $! > target/local-runner.pid
+          for i in {1..60}; do
+            if curl -fsS http://localhost:8080/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://localhost:8080/ > /dev/null || (echo "app did not start"; cat target/local-runner.log; exit 1)
+
+      # Run the performance smoke profile.
+      - name: Run Gatling simulation
+        run: ./mvnw -B test -P gatling
+
+      # Stop the background JVM.
+      - name: Stop app
+        if: always()
+        shell: bash
+        run: kill "$(cat target/local-runner.pid)" || true
+
+      # Upload the HTML performance report.
+      - name: Upload Gatling report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gatling-report
+          path: target/gatling
+          retention-days: 14
+
+  dependency-snapshot:
+    name: 07 - Dependency snapshot
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the source so Maven can resolve the dependency tree.
+      - uses: actions/checkout@v4
+
+      # Install Java and use the Maven cache.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Write the full dependency graph to a text file.
+      - name: Generate dependency tree
+        run: ./mvnw -B dependency:tree -DoutputFile=target/dependency-tree.txt
+
+      # Keep the dependency list as an artifact for review.
+      - name: Upload dependency tree
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-tree
+          path: target/dependency-tree.txt
+          retention-days: 7
+
+  codeql:
+    name: 08 - CodeQL
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the source for static analysis.
+      - uses: actions/checkout@v4
+
+      # Initialize the CodeQL analyzer for Java/Kotlin.
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: java-kotlin
+
+      # Install Java so CodeQL can build the project.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Let CodeQL infer the correct build sequence.
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      # Publish analysis findings into the GitHub security UI.
+      - name: Analyze code
+        uses: github/codeql-action/analyze@v3
+
+  secret-scan:
+    name: 09 - Secret scan
+    needs: gatling
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the tracked files so grep can scan them.
+      - uses: actions/checkout@v4
+
+      # Scan committed source files for common token and private key patterns.
+      - name: Scan tracked files
+        shell: bash
+        run: |
+          set -euo pipefail
+          pattern='Bearer [A-Za-z0-9_.-]{20,}|gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----'
+          matches=$(git ls-files | grep -Ev '(^target/|\.png$|\.jpg$|\.jpeg$|\.ico$|\.jar$|\.bin$)' | xargs -r grep -En "$pattern" || true)
+          if [ -n "$matches" ]; then
+            echo "::error::possible secret found"
+            echo "$matches"
+            exit 1
+          fi
+          echo "no secret patterns matched"
+
+      # Download the API report artifact from the earlier test job.
+      - uses: actions/download-artifact@v4
+        with:
+          name: karate-report
+          path: reports/karate
+
+      # Download the Gatling artifact from the performance job.
+      - uses: actions/download-artifact@v4
+        with:
+          name: gatling-report
+          path: reports/gatling
+
+      # Scan published report files for accidental secret leakage.
+      - name: Scan reports
+        shell: bash
+        run: |
+          set +e
+          pattern='Bearer [A-Za-z0-9_.-]{20,}|gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----'
+          matches=$(grep -REn "$pattern" reports/ || true)
+          if [ -n "$matches" ]; then
+            echo "::error::secrets found in reports"
+            echo "$matches"
+            exit 1
+          fi
+          echo "no report secret patterns matched"
+
+  publish:
+    name: 10 - Publish reports
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - ui-tests
+      - secret-scan
+    runs-on: ubuntu-latest
+    steps:
+      # Download the API report that will be published to Pages.
+      - uses: actions/download-artifact@v4
+        with:
+          name: karate-report
+          path: public/latest/karate
+
+      # Download the Gatling report artifact.
+      - uses: actions/download-artifact@v4
+        with:
+          name: gatling-report
+          path: public/latest/gatling-raw
+
+      # Move the timestamped Gatling directory into a stable published path.
+      - name: Flatten Gatling output
+        shell: bash
+        run: |
+          sim=$(find public/latest/gatling-raw -maxdepth 1 -type d -name 'todosimulation-*' | head -1)
+          test -n "$sim" || (echo "gatling output not found"; exit 1)
+          mv "$sim" public/latest/gatling
+          rm -rf public/latest/gatling-raw
+
+      # Generate a simple landing page for the published reports.
+      - name: Generate index
+        shell: bash
+        run: |
+          cat > public/latest/index.html <<'HTML'
+          <!doctype html>
+          <html>
+          <head><meta charset="utf-8"><title>karate-todo reports</title>
+          <style>body{font-family:system-ui,sans-serif;max-width:48rem;margin:3rem auto;padding:0 1rem}
+          a{display:block;padding:.5rem 0}</style></head>
+          <body>
+            <h1>karate-todo latest CI reports</h1>
+            <p>Published from <code>main</code>.</p>
+            <a href="karate/">Karate report</a>
+            <a href="gatling/">Gatling report</a>
+          </body>
+          </html>
+          HTML
+          cat > public/index.html <<'HTML'
+          <!doctype html>
+          <html>
+          <head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=latest/"></head>
+          <body><a href="latest/">latest reports</a></body>
+          </html>
+          HTML
+
+      # Push the static site to the gh-pages branch.
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
+          keep_files: false
