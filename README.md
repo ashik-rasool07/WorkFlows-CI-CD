@@ -4,10 +4,10 @@
 
 The flagship demo for [Karate](https://karatelabs.io) v2: a self-contained TODO app wired up
 with runnable examples of API tests, API mocks, UI automation (Testcontainers + headless Chrome),
-performance tests (Gatling), and GitHub Actions pipelines that publish HTML reports.
-[03-ui-tests.yml](.github/workflows/03-ui-tests.yml)
+performance tests (Gatling), and a GitHub Actions pipeline that publishes HTML reports.
+
 This copy is set up as a CI/CD learning repo. The app stays the same, but the GitHub Actions side
-now includes 10 workflows that cover common pipeline patterns one file at a time.
+now uses one workflow with many jobs so you can learn the full pipeline from a single run page.
 
 ## See it live
 
@@ -91,42 +91,47 @@ The devcontainer ships with JDK 21, Maven, and Docker-in-Docker so every command
 Port 8080 auto-forwards for `LocalRunner`. After `./mvnw verify -Pui`, right-click any report `.html`
 and open it with Live Server.
 
-## CI/CD learning set
+## CI/CD workflow
 
-This repo includes 10 GitHub Actions workflows so you can learn CI/CD in small steps and then compare that to
-one integrated pipeline. Every workflow can also be started manually from the GitHub Actions UI with `workflow_dispatch`.
+This repo now uses one GitHub Actions workflow:
 
-| Workflow | File | What it teaches |
-|---|---|---|
-| 1 | [`.github/workflows/01-validate.yml`](.github/workflows/01-validate.yml) | Smallest useful CI job: checkout, Java setup, Maven cache, `validate` |
-| 2 | [`.github/workflows/02-api-tests.yml`](.github/workflows/02-api-tests.yml) | Run API tests on push / PR and upload reports as artifacts |
-| 3 | [`.github/workflows/03-ui-tests.yml`](.github/workflows/03-ui-tests.yml) | Run Docker-backed UI tests with Testcontainers |
-| 4 | [`.github/workflows/04-package.yml`](.github/workflows/04-package.yml) | Build and store a package artifact on tag creation |
-| 5 | [`.github/workflows/05-smoke-test.yml`](.github/workflows/05-smoke-test.yml) | Start the app in the background and verify it responds |
-| 6 | [`.github/workflows/06-gatling.yml`](.github/workflows/06-gatling.yml) | Scheduled performance smoke testing with Gatling |
-| 7 | [`.github/workflows/07-dependency-review.yml`](.github/workflows/07-dependency-review.yml) | PR dependency review, plus a manual dependency snapshot run |
-| 8 | [`.github/workflows/08-codeql.yml`](.github/workflows/08-codeql.yml) | Static security analysis with CodeQL |
-| 9 | [`.github/workflows/09-secret-scan.yml`](.github/workflows/09-secret-scan.yml) | Secret detection against tracked source files |
-| 10 | [`.github/workflows/cicd.yml`](.github/workflows/cicd.yml) | An end-to-end pipeline that chains tests, performance, report scanning, and publish |
+- [`.github/workflows/cicd.yml`](.github/workflows/cicd.yml)
 
-Suggested order:
+It is runnable on:
 
-1. Start with workflow 1 to understand the minimum GitHub Actions structure.
-2. Add workflows 2 to 5 to learn test execution, artifacts, and smoke checks.
-3. Add workflows 6 to 9 to cover performance, supply-chain review, static analysis, and secret scanning.
-4. Read workflow 10 last to see how separate ideas compose into a release-style pipeline.
+- push to `main`
+- pull requests
+- manual run from the GitHub Actions UI with `workflow_dispatch`
 
-## End-to-end pipeline
+The workflow contains 10 jobs:
 
-[`.github/workflows/cicd.yml`](.github/workflows/cicd.yml) stages jobs as `tests` -> `gatling` -> `secret-scan` -> `publish`,
-runs on every push to `main` and on manual dispatch, and publishes the assembled reports to GitHub Pages.
-
-| Stage | What it does |
+| Job | What it teaches |
 |---|---|
-| `tests` | `./mvnw verify -Pui` for one hybrid suite (API + UI) via Testcontainers |
-| `gatling` | Starts `LocalRunner` in the background and runs `TodoSimulation` against it |
-| `secret-scan` | Greps report artifacts for common token and private-key patterns and fails the build on hit |
-| `publish` | On `main` only: assembles `latest/{karate,gatling}/` and pushes to `gh-pages` |
+| `01 - Validate build` | Smallest useful CI job: checkout, Java setup, Maven cache, `validate` |
+| `02 - API tests` | Run API tests and upload reports as artifacts |
+| `03 - UI tests` | Run Docker-backed UI tests with Testcontainers |
+| `04 - Package artifact` | Build and store a jar artifact |
+| `05 - Smoke test app` | Start the app in the background and verify it responds |
+| `06 - Performance smoke` | Run Gatling against a live app instance |
+| `07 - Dependency snapshot` | Generate and upload a dependency tree |
+| `08 - CodeQL` | Static security analysis |
+| `09 - Secret scan` | Scan source and reports for secret patterns |
+| `10 - Publish reports` | Publish reports to GitHub Pages on `main` |
+
+Read it in this order:
+
+1. Validate
+2. API tests
+3. UI tests
+4. Package
+5. Smoke test
+6. Gatling
+7. Dependency snapshot
+8. CodeQL
+9. Secret scan
+10. Publish
+
+The jobs mix parallel and dependent execution so you can see both styles in one workflow graph.
 
 Live reports: [karatelabs.github.io/karate-todo/latest/](https://karatelabs.github.io/karate-todo/latest/)
 
