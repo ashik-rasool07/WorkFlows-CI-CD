@@ -96,7 +96,7 @@ jobs:
 
   publish:
     name: Publish reports to gh-pages
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     needs: secret-scan
     runs-on: ubuntu-latest
     steps:
