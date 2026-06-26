@@ -236,22 +236,22 @@
   "name": "Java interop from feature files",
   "relativePath": "target/test-classes/app/api/interop/interop.feature",
   "passed": true,
-  "durationMillis": 111,
-  "reportDate": "2026-06-26 14:14:49",
+  "durationMillis": 725,
+  "reportDate": "2026-06-26 14:18:52",
   "karateVersion": "2.1.0",
   "scenarios": [
     {
       "name": "calling static method",
       "line": 4,
       "passed": true,
-      "durationMillis": 34,
-      "startTime": 1782483289727,
-      "endTime": 1782483289761,
+      "durationMillis": 5,
+      "startTime": 1782483532791,
+      "endTime": 1782483532796,
       "refId": "[1:4]",
       "sectionIndex": 1,
       "exampleIndex": -1,
       "isOutlineExample": false,
-      "thread": "2",
+      "thread": "1",
       "tags": [
         "@api",
         "@java-interop"
@@ -286,7 +286,7 @@
           "text": "result == { \"message\": \"hello world\" }",
           "line": 7,
           "status": "passed",
-          "durationMillis": 28,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -297,14 +297,14 @@
       "name": null,
       "line": 9,
       "passed": true,
-      "durationMillis": 41,
-      "startTime": 1782483289727,
-      "endTime": 1782483289768,
+      "durationMillis": 19,
+      "startTime": 1782483532797,
+      "endTime": 1782483532816,
       "refId": "[2:9]",
       "sectionIndex": 2,
       "exampleIndex": -1,
       "isOutlineExample": false,
-      "thread": "3",
+      "thread": "1",
       "tags": [
         "@api",
         "@java-interop"
@@ -317,7 +317,7 @@
           "text": "helper = Java.type('app.api.interop.Helper')",
           "line": 10,
           "status": "passed",
-          "durationMillis": 2,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -339,7 +339,7 @@
           "text": "decoded = helper.fromBrotli(encoded)",
           "line": 12,
           "status": "passed",
-          "durationMillis": 27,
+          "durationMillis": 16,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
@@ -361,7 +361,7 @@
           "text": "json = karate.fromString(decoded)",
           "line": 14,
           "status": "passed",
-          "durationMillis": 5,
+          "durationMillis": 0,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": false
