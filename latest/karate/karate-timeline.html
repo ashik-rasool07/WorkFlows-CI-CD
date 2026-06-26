@@ -214,7 +214,7 @@
     <script src="res/karate-report.js"></script>
     <script id="karate-data" type="application/json">{
   "env": null,
-  "reportDate": "2026-06-26 14:18:52",
+  "reportDate": "2026-06-26 14:34:32",
   "threads": 3,
   "karateVersion": "2.1.0",
   "summary": {
@@ -225,131 +225,139 @@
     "scenario_passed": 11,
     "scenario_failed": 0,
     "scenario_skipped": 0,
-    "duration_millis": 797,
+    "duration_millis": 763,
     "status": "passed"
   },
   "groups": [
     {
       "id": 1,
-      "content": "Thread 3"
+      "content": "Thread 2"
     },
     {
       "id": 2,
-      "content": "Thread 1"
+      "content": "Thread 3"
     },
     {
       "id": 3,
-      "content": "Thread 2"
+      "content": "Thread 1"
     }
   ],
   "items": [
     {
       "id": 1,
       "group": 1,
-      "content": "match[1:4]",
-      "start": 1782483532152,
-      "end": 1782483532178,
-      "title": "match[1:4] 14:18:52.152 (27 ms) match examples",
+      "content": "interop[1:4]",
+      "start": 1782484472434,
+      "end": 1782484472470,
+      "title": "interop[1:4] 14:34:32.434 (37 ms) calling static method",
       "className": "passed"
     },
     {
       "id": 2,
       "group": 2,
-      "content": "caller[1:8]",
-      "start": 1782483532154,
-      "end": 1782483532783,
-      "title": "caller[1:8] 14:18:52.154 (630 ms) create a todo via a helper, then verify it exists",
+      "content": "interop[2:9]",
+      "start": 1782484472432,
+      "end": 1782484472471,
+      "title": "interop[2:9] 14:34:32.432 (40 ms)",
       "className": "passed"
     },
     {
       "id": 3,
-      "group": 2,
-      "content": "outline-csv[1.1:8]",
-      "start": 1782483532785,
-      "end": 1782483532785,
-      "title": "outline-csv[1.1:8] 14:18:52.785 (1 ms) dynamic 1",
+      "group": 3,
+      "content": "caller[1:8]",
+      "start": 1782484472433,
+      "end": 1782484473027,
+      "title": "caller[1:8] 14:34:32.433 (595 ms) create a todo via a helper, then verify it exists",
       "className": "passed"
     },
     {
       "id": 4,
       "group": 2,
-      "content": "outline-csv[1.2:8]",
-      "start": 1782483532790,
-      "end": 1782483532790,
-      "title": "outline-csv[1.2:8] 14:18:52.790 (1 ms) dynamic 2",
+      "content": "nested[1:11]",
+      "start": 1782484472473,
+      "end": 1782484473076,
+      "title": "nested[1:11] 14:34:32.473 (604 ms) create several todos by chaining helpers",
       "className": "passed"
     },
     {
       "id": 5,
-      "group": 2,
-      "content": "interop[1:4]",
-      "start": 1782483532791,
-      "end": 1782483532795,
-      "title": "interop[1:4] 14:18:52.791 (5 ms) calling static method",
+      "group": 1,
+      "content": "simple[1:7]",
+      "start": 1782484472477,
+      "end": 1782484473078,
+      "title": "simple[1:7] 14:34:32.477 (602 ms) simple crud flow",
       "className": "passed"
     },
     {
       "id": 6,
-      "group": 2,
-      "content": "interop[2:9]",
-      "start": 1782483532797,
-      "end": 1782483532815,
-      "title": "interop[2:9] 14:18:52.797 (19 ms)",
+      "group": 1,
+      "content": "outline-csv[1.1:8]",
+      "start": 1782484473080,
+      "end": 1782484473080,
+      "title": "outline-csv[1.1:8] 14:34:33.080 (1 ms) dynamic 1",
       "className": "passed"
     },
     {
       "id": 7,
-      "group": 3,
-      "content": "simple[1:7]",
-      "start": 1782483532155,
-      "end": 1782483532814,
-      "title": "simple[1:7] 14:18:52.155 (660 ms) simple crud flow",
+      "group": 1,
+      "content": "outline-csv[1.2:8]",
+      "start": 1782484473082,
+      "end": 1782484473082,
+      "title": "outline-csv[1.2:8] 14:34:33.082 (1 ms) dynamic 2",
       "className": "passed"
     },
     {
       "id": 8,
-      "group": 1,
-      "content": "nested[1:11]",
-      "start": 1782483532182,
-      "end": 1782483532818,
-      "title": "nested[1:11] 14:18:52.182 (637 ms) create several todos by chaining helpers",
+      "group": 3,
+      "content": "outline[1.1:13]",
+      "start": 1782484473030,
+      "end": 1782484473050,
+      "title": "outline[1.1:13] 14:34:33.030 (21 ms) using title: One",
       "className": "passed"
     },
     {
       "id": 9,
       "group": 3,
-      "content": "outline[1.1:13]",
-      "start": 1782483532817,
-      "end": 1782483532831,
-      "title": "outline[1.1:13] 14:18:52.817 (15 ms) using title: One",
+      "content": "outline[1.2:13]",
+      "start": 1782484473052,
+      "end": 1782484473072,
+      "title": "outline[1.2:13] 14:34:33.052 (21 ms) using title: Two",
       "className": "passed"
     },
     {
       "id": 10,
-      "group": 2,
-      "content": "outline[1.2:13]",
-      "start": 1782483532818,
-      "end": 1782483532830,
-      "title": "outline[1.2:13] 14:18:52.818 (13 ms) using title: Two",
+      "group": 3,
+      "content": "outline[1.3:13]",
+      "start": 1782484473074,
+      "end": 1782484473085,
+      "title": "outline[1.3:13] 14:34:33.074 (12 ms) using title: Three",
       "className": "passed"
     },
     {
       "id": 11,
-      "group": 1,
-      "content": "outline[1.3:13]",
-      "start": 1782483532827,
-      "end": 1782483532841,
-      "title": "outline[1.3:13] 14:18:52.827 (15 ms) using title: Three",
+      "group": 2,
+      "content": "match[1:4]",
+      "start": 1782484473078,
+      "end": 1782484473088,
+      "title": "match[1:4] 14:34:33.078 (11 ms) match examples",
       "className": "passed"
     }
   ],
   "scenarios": [
     {
-      "featureFileName": "match",
-      "featureHtmlName": "target.test-classes.app.api.match.match",
+      "featureFileName": "interop",
+      "featureHtmlName": "target.test-classes.app.api.interop.interop",
       "refId": "[1:4]",
-      "name": "match examples",
-      "durationMillis": 27,
+      "name": "calling static method",
+      "durationMillis": 37,
+      "passed": true
+    },
+    {
+      "featureFileName": "interop",
+      "featureHtmlName": "target.test-classes.app.api.interop.interop",
+      "refId": "[2:9]",
+      "name": null,
+      "durationMillis": 40,
       "passed": true
     },
     {
@@ -357,7 +365,23 @@
       "featureHtmlName": "target.test-classes.app.api.call.caller",
       "refId": "[1:8]",
       "name": "create a todo via a helper, then verify it exists",
-      "durationMillis": 630,
+      "durationMillis": 595,
+      "passed": true
+    },
+    {
+      "featureFileName": "nested",
+      "featureHtmlName": "target.test-classes.app.api.call.nested",
+      "refId": "[1:11]",
+      "name": "create several todos by chaining helpers",
+      "durationMillis": 604,
+      "passed": true
+    },
+    {
+      "featureFileName": "simple",
+      "featureHtmlName": "target.test-classes.app.api.simple.simple",
+      "refId": "[1:7]",
+      "name": "simple crud flow",
+      "durationMillis": 602,
       "passed": true
     },
     {
@@ -377,43 +401,11 @@
       "passed": true
     },
     {
-      "featureFileName": "interop",
-      "featureHtmlName": "target.test-classes.app.api.interop.interop",
-      "refId": "[1:4]",
-      "name": "calling static method",
-      "durationMillis": 5,
-      "passed": true
-    },
-    {
-      "featureFileName": "interop",
-      "featureHtmlName": "target.test-classes.app.api.interop.interop",
-      "refId": "[2:9]",
-      "name": null,
-      "durationMillis": 19,
-      "passed": true
-    },
-    {
-      "featureFileName": "simple",
-      "featureHtmlName": "target.test-classes.app.api.simple.simple",
-      "refId": "[1:7]",
-      "name": "simple crud flow",
-      "durationMillis": 660,
-      "passed": true
-    },
-    {
-      "featureFileName": "nested",
-      "featureHtmlName": "target.test-classes.app.api.call.nested",
-      "refId": "[1:11]",
-      "name": "create several todos by chaining helpers",
-      "durationMillis": 637,
-      "passed": true
-    },
-    {
       "featureFileName": "outline",
       "featureHtmlName": "target.test-classes.app.api.data.outline",
       "refId": "[1.1:13]",
       "name": "using title: One",
-      "durationMillis": 15,
+      "durationMillis": 21,
       "passed": true
     },
     {
@@ -421,7 +413,7 @@
       "featureHtmlName": "target.test-classes.app.api.data.outline",
       "refId": "[1.2:13]",
       "name": "using title: Two",
-      "durationMillis": 13,
+      "durationMillis": 21,
       "passed": true
     },
     {
@@ -429,11 +421,19 @@
       "featureHtmlName": "target.test-classes.app.api.data.outline",
       "refId": "[1.3:13]",
       "name": "using title: Three",
-      "durationMillis": 15,
+      "durationMillis": 12,
+      "passed": true
+    },
+    {
+      "featureFileName": "match",
+      "featureHtmlName": "target.test-classes.app.api.match.match",
+      "refId": "[1:4]",
+      "name": "match examples",
+      "durationMillis": 11,
       "passed": true
     }
   ],
-  "serialDurationMillis": 2023
+  "serialDurationMillis": 1945
 }</script>
 </body>
 </html>
