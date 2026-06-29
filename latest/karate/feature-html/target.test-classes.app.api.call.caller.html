@@ -236,8 +236,8 @@
   "name": "using a called feature to set up test data",
   "relativePath": "target/test-classes/app/api/call/caller.feature",
   "passed": true,
-  "durationMillis": 594,
-  "reportDate": "2026-06-26 15:08:47",
+  "durationMillis": 630,
+  "reportDate": "2026-06-29 09:29:28",
   "karateVersion": "2.1.0",
   "scenarios": [
     {
@@ -245,13 +245,13 @@
       "line": 8,
       "passed": true,
       "durationMillis": 526,
-      "startTime": 1782486527817,
-      "endTime": 1782486528343,
+      "startTime": 1782725368779,
+      "endTime": 1782725369305,
       "refId": "[1:8]",
       "sectionIndex": 1,
       "exampleIndex": -1,
       "isOutlineExample": false,
-      "thread": "1",
+      "thread": "3",
       "tags": [
         "@api",
         "@call"
@@ -264,7 +264,7 @@
           "text": "created = call read('called.feature') { title: 'from-caller' }",
           "line": 9,
           "status": "passed",
-          "durationMillis": 507,
+          "durationMillis": 511,
           "hasLogs": false,
           "hasEmbeds": false,
           "hasCallResults": true,
@@ -274,22 +274,22 @@
               "name": "reusable helper that creates a todo and returns its id",
               "relativePath": "target/test-classes/app/api/call/called.feature",
               "passed": true,
-              "durationMillis": 483,
-              "reportDate": "2026-06-26 15:08:47",
+              "durationMillis": 511,
+              "reportDate": "2026-06-29 09:29:28",
               "karateVersion": "2.1.0",
               "scenarios": [
                 {
                   "name": null,
                   "line": 9,
                   "passed": true,
-                  "durationMillis": 480,
-                  "startTime": 1782486527845,
-                  "endTime": 1782486528325,
+                  "durationMillis": 510,
+                  "startTime": 1782725368780,
+                  "endTime": 1782725369290,
                   "refId": "[1:9]",
                   "sectionIndex": 1,
                   "exampleIndex": -1,
                   "isOutlineExample": false,
-                  "thread": "1",
+                  "thread": "3",
                   "tags": [
                     "@ignore"
                   ],
@@ -323,25 +323,25 @@
                       "text": "post",
                       "line": 12,
                       "status": "passed",
-                      "durationMillis": 479,
+                      "durationMillis": 509,
                       "hasLogs": true,
                       "logSegments": [
                         {
-                          "text": "request:\n1 > POST http://localhost:37475/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:37475\n1 > Content-Length: 40\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
+                          "text": "request:\n1 > POST http://localhost:36483/api/todos\n1 > Content-Type: application/json; charset=UTF-8\n1 > Host: localhost:36483\n1 > Content-Length: 40\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n"
                         },
                         {
                           "lang": "json",
                           "code": "{\n  \"title\": \"from-caller\",\n  \"complete\": false\n}"
                         },
                         {
-                          "text": "\n\nresponse time in milliseconds: 189\n1 < 201 POST http://localhost:37475/api/todos\n1 < content-length: 84\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+                          "text": "\n\nresponse time in milliseconds: 217\n1 < 201 POST http://localhost:36483/api/todos\n1 < content-length: 84\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
                         },
                         {
                           "lang": "json",
-                          "code": "{\n  \"title\": \"from-caller\",\n  \"complete\": false,\n  \"id\": \"c16416e0-ffe8-47a5-967f-ca015f85a074\"\n}"
+                          "code": "{\n  \"title\": \"from-caller\",\n  \"complete\": false,\n  \"id\": \"1da5be23-c07b-483f-a068-4ae9fc270831\"\n}"
                         },
                         {
-                          "text": "\n\nPOST http://localhost:37475/api/todos\n201 (189 ms)\n"
+                          "text": "\n\nPOST http://localhost:36483/api/todos\n201 (217 ms)\n"
                         }
                       ],
                       "hasEmbeds": false,
@@ -392,18 +392,18 @@
           "text": "get",
           "line": 12,
           "status": "passed",
-          "durationMillis": 17,
+          "durationMillis": 14,
           "hasLogs": true,
           "logSegments": [
             {
-              "text": "request:\n1 > GET http://localhost:37475/api/todos/c16416e0-ffe8-47a5-967f-ca015f85a074\n1 > Host: localhost:37475\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 12\n1 < 200 GET http://localhost:37475/api/todos/c16416e0-ffe8-47a5-967f-ca015f85a074\n1 < content-length: 84\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
+              "text": "request:\n1 > GET http://localhost:36483/api/todos/1da5be23-c07b-483f-a068-4ae9fc270831\n1 > Host: localhost:36483\n1 > Connection: keep-alive\n1 > User-Agent: Apache-HttpClient/5.6.1 (Java/21.0.11)\n\nresponse time in milliseconds: 9\n1 < 200 GET http://localhost:36483/api/todos/1da5be23-c07b-483f-a068-4ae9fc270831\n1 < content-length: 84\n1 < Set-Cookie: karate.sid=singleton; Path=/; HttpOnly; SameSite=Lax; Secure\n1 < Content-Type: application/json; charset=UTF-8\n"
             },
             {
               "lang": "json",
-              "code": "{\n  \"title\": \"from-caller\",\n  \"complete\": false,\n  \"id\": \"c16416e0-ffe8-47a5-967f-ca015f85a074\"\n}"
+              "code": "{\n  \"title\": \"from-caller\",\n  \"complete\": false,\n  \"id\": \"1da5be23-c07b-483f-a068-4ae9fc270831\"\n}"
             },
             {
-              "text": "\n\nGET http://localhost:37475/api/todos/c16416e0-ffe8-47a5-967f-ca015f85a074\n200 (12 ms)\n"
+              "text": "\n\nGET http://localhost:36483/api/todos/1da5be23-c07b-483f-a068-4ae9fc270831\n200 (9 ms)\n"
             }
           ],
           "hasEmbeds": false,
