@@ -352,7 +352,7 @@
     <script src="res/karate-report.js"></script>
     <script id="karate-data" type="application/json">{
   "env": null,
-  "reportDate": "2026-06-30 11:44:15",
+  "reportDate": "2026-07-02 09:54:43",
   "karateVersion": "2.1.0",
   "summary": {
     "feature_count": 7,
@@ -362,44 +362,17 @@
     "scenario_passed": 11,
     "scenario_failed": 0,
     "scenario_skipped": 0,
-    "duration_millis": 762,
+    "duration_millis": 680,
     "status": "passed"
   },
   "features": [
-    {
-      "name": "match assertion examples",
-      "relativePath": "target/test-classes/app/api/match/match.feature",
-      "fileName": "target.test-classes.app.api.match.match",
-      "passed": true,
-      "failed": false,
-      "durationMillis": 116,
-      "scenarioCount": 1,
-      "passedCount": 1,
-      "failedCount": 0,
-      "skippedCount": 0,
-      "passedRate": 100,
-      "scenarios": [
-        {
-          "name": "match examples",
-          "refId": "[1:4]",
-          "passed": true,
-          "skipped": false,
-          "durationMillis": 14,
-          "tags": [
-            "@api",
-            "@match",
-            "@assertions"
-          ]
-        }
-      ]
-    },
     {
       "name": "Java interop from feature files",
       "relativePath": "target/test-classes/app/api/interop/interop.feature",
       "fileName": "target.test-classes.app.api.interop.interop",
       "passed": true,
       "failed": false,
-      "durationMillis": 101,
+      "durationMillis": 605,
       "scenarioCount": 2,
       "passedCount": 2,
       "failedCount": 0,
@@ -411,7 +384,7 @@
           "refId": "[1:4]",
           "passed": true,
           "skipped": false,
-          "durationMillis": 32,
+          "durationMillis": 3,
           "tags": [
             "@api",
             "@java-interop"
@@ -422,10 +395,153 @@
           "refId": "[2:9]",
           "passed": true,
           "skipped": false,
-          "durationMillis": 36,
+          "durationMillis": 46,
           "tags": [
             "@api",
             "@java-interop"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "using a csv file for data-driven testing",
+      "relativePath": "target/test-classes/app/api/data/outline-csv.feature",
+      "fileName": "target.test-classes.app.api.data.outline-csv",
+      "passed": true,
+      "failed": false,
+      "durationMillis": 609,
+      "scenarioCount": 2,
+      "passedCount": 2,
+      "failedCount": 0,
+      "skippedCount": 0,
+      "passedRate": 100,
+      "scenarios": [
+        {
+          "name": "dynamic 1",
+          "refId": "[1.1:8]",
+          "passed": true,
+          "skipped": false,
+          "durationMillis": 1,
+          "tags": [
+            "@api",
+            "@data-driven"
+          ]
+        },
+        {
+          "name": "dynamic 2",
+          "refId": "[1.2:8]",
+          "passed": true,
+          "skipped": false,
+          "durationMillis": 1,
+          "tags": [
+            "@api",
+            "@data-driven"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "using a called feature to set up test data",
+      "relativePath": "target/test-classes/app/api/call/caller.feature",
+      "fileName": "target.test-classes.app.api.call.caller",
+      "passed": true,
+      "failed": false,
+      "durationMillis": 547,
+      "scenarioCount": 1,
+      "passedCount": 1,
+      "failedCount": 0,
+      "skippedCount": 0,
+      "passedRate": 100,
+      "scenarios": [
+        {
+          "name": "create a todo via a helper, then verify it exists",
+          "refId": "[1:8]",
+          "passed": true,
+          "skipped": false,
+          "durationMillis": 495,
+          "tags": [
+            "@api",
+            "@call"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "match assertion examples",
+      "relativePath": "target/test-classes/app/api/match/match.feature",
+      "fileName": "target.test-classes.app.api.match.match",
+      "passed": true,
+      "failed": false,
+      "durationMillis": 619,
+      "scenarioCount": 1,
+      "passedCount": 1,
+      "failedCount": 0,
+      "skippedCount": 0,
+      "passedRate": 100,
+      "scenarios": [
+        {
+          "name": "match examples",
+          "refId": "[1:4]",
+          "passed": true,
+          "skipped": false,
+          "durationMillis": 7,
+          "tags": [
+            "@api",
+            "@match",
+            "@assertions"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "simple crud flow against the todo API",
+      "relativePath": "target/test-classes/app/api/simple/simple.feature",
+      "fileName": "target.test-classes.app.api.simple.simple",
+      "passed": true,
+      "failed": false,
+      "durationMillis": 620,
+      "scenarioCount": 1,
+      "passedCount": 1,
+      "failedCount": 0,
+      "skippedCount": 0,
+      "passedRate": 100,
+      "scenarios": [
+        {
+          "name": "simple crud flow",
+          "refId": "[1:7]",
+          "passed": true,
+          "skipped": false,
+          "durationMillis": 562,
+          "tags": [
+            "@smoke",
+            "@api",
+            "@crud"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "nested called features — a chain of reusable helpers",
+      "relativePath": "target/test-classes/app/api/call/nested.feature",
+      "fileName": "target.test-classes.app.api.call.nested",
+      "passed": true,
+      "failed": false,
+      "durationMillis": 617,
+      "scenarioCount": 1,
+      "passedCount": 1,
+      "failedCount": 0,
+      "skippedCount": 0,
+      "passedRate": 100,
+      "scenarios": [
+        {
+          "name": "create several todos by chaining helpers",
+          "refId": "[1:11]",
+          "passed": true,
+          "skipped": false,
+          "durationMillis": 560,
+          "tags": [
+            "@api",
+            "@call"
           ]
         }
       ]
@@ -436,7 +552,7 @@
       "fileName": "target.test-classes.app.api.data.outline",
       "passed": true,
       "failed": false,
-      "durationMillis": 679,
+      "durationMillis": 633,
       "scenarioCount": 3,
       "passedCount": 3,
       "failedCount": 0,
@@ -448,7 +564,7 @@
           "refId": "[1.1:13]",
           "passed": true,
           "skipped": false,
-          "durationMillis": 530,
+          "durationMillis": 13,
           "tags": [
             "@api",
             "@data-driven",
@@ -472,127 +588,11 @@
           "refId": "[1.3:13]",
           "passed": true,
           "skipped": false,
-          "durationMillis": 15,
+          "durationMillis": 8,
           "tags": [
             "@api",
             "@data-driven",
             "@crud"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "using a csv file for data-driven testing",
-      "relativePath": "target/test-classes/app/api/data/outline-csv.feature",
-      "fileName": "target.test-classes.app.api.data.outline-csv",
-      "passed": true,
-      "failed": false,
-      "durationMillis": 708,
-      "scenarioCount": 2,
-      "passedCount": 2,
-      "failedCount": 0,
-      "skippedCount": 0,
-      "passedRate": 100,
-      "scenarios": [
-        {
-          "name": "dynamic 1",
-          "refId": "[1.1:8]",
-          "passed": true,
-          "skipped": false,
-          "durationMillis": 0,
-          "tags": [
-            "@api",
-            "@data-driven"
-          ]
-        },
-        {
-          "name": "dynamic 2",
-          "refId": "[1.2:8]",
-          "passed": true,
-          "skipped": false,
-          "durationMillis": 1,
-          "tags": [
-            "@api",
-            "@data-driven"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "simple crud flow against the todo API",
-      "relativePath": "target/test-classes/app/api/simple/simple.feature",
-      "fileName": "target.test-classes.app.api.simple.simple",
-      "passed": true,
-      "failed": false,
-      "durationMillis": 704,
-      "scenarioCount": 1,
-      "passedCount": 1,
-      "failedCount": 0,
-      "skippedCount": 0,
-      "passedRate": 100,
-      "scenarios": [
-        {
-          "name": "simple crud flow",
-          "refId": "[1:7]",
-          "passed": true,
-          "skipped": false,
-          "durationMillis": 605,
-          "tags": [
-            "@smoke",
-            "@api",
-            "@crud"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "nested called features — a chain of reusable helpers",
-      "relativePath": "target/test-classes/app/api/call/nested.feature",
-      "fileName": "target.test-classes.app.api.call.nested",
-      "passed": true,
-      "failed": false,
-      "durationMillis": 706,
-      "scenarioCount": 1,
-      "passedCount": 1,
-      "failedCount": 0,
-      "skippedCount": 0,
-      "passedRate": 100,
-      "scenarios": [
-        {
-          "name": "create several todos by chaining helpers",
-          "refId": "[1:11]",
-          "passed": true,
-          "skipped": false,
-          "durationMillis": 642,
-          "tags": [
-            "@api",
-            "@call"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "using a called feature to set up test data",
-      "relativePath": "target/test-classes/app/api/call/caller.feature",
-      "fileName": "target.test-classes.app.api.call.caller",
-      "passed": true,
-      "failed": false,
-      "durationMillis": 713,
-      "scenarioCount": 1,
-      "passedCount": 1,
-      "failedCount": 0,
-      "skippedCount": 0,
-      "passedRate": 100,
-      "scenarios": [
-        {
-          "name": "create a todo via a helper, then verify it exists",
-          "refId": "[1:8]",
-          "passed": true,
-          "skipped": false,
-          "durationMillis": 34,
-          "tags": [
-            "@api",
-            "@call"
           ]
         }
       ]
